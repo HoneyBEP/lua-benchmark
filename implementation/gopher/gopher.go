@@ -15,5 +15,28 @@ func Run(tests []string) string {
 		}
 	}
 
+	if err := L.DoFile("benchmark.lua"); err != nil {
+		return fmt.Sprintf("%s \n", err)
+	}
+
+	// Lua function in Go
+	L.CallByParam(lua.P{
+		Fn: L.GetGlobal("benchmark"),
+		NRet: 1,
+		Protect: true,
+	}, lua.LNumber(10))
+	fmt.Printf("print `depth` from Go: %v \n",  L.Get(-1))
+
+	// Register Go function in Lua
+	L.Register("count", func(l *lua.LState) int {
+		L.Push(lua.LNumber(8))
+		fmt.Println("echo `count` in Go")
+		return 1
+	})
+
+	// Run Go function in Lua
+	// L.Call(0, 1)
+	L.DoString("countFromGo()")
+
 	return ""
 }
