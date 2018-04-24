@@ -4,6 +4,6 @@ package native
 
 import "fmt"
 
-func Run() string {
+func Run(_ []string) string {
 	return fmt.Sprintf("Unavailable")
 }

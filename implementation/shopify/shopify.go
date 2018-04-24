@@ -15,7 +15,6 @@ func Run(tests []string) string {
 		}
 	}
 
-	lua.DoFile(L, "benchmark.lua")
 	if err := lua.DoFile(L, "benchmark.lua"); err != nil {
 		return fmt.Sprintf("%s \n", err)
 	}
@@ -26,7 +25,6 @@ func Run(tests []string) string {
 	L.PushInteger(10)
 
 	L.Call(1, 1)
-	L.ToInteger(1)
 	fmt.Printf("print `depth` from Go: %v \n",  L.ToValue(1))
 
 	// Register Go function in Lua
