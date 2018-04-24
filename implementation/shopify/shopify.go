@@ -1,22 +1,23 @@
 package shopify
 
 import (
-	"github.com/Shopify/go-lua"
 	"fmt"
+	"github.com/Shopify/go-lua"
 )
 
-/**
-
-Shopify uses Lua 5.2
-
- */
-
-func Run() string {
+func Run(tests []string) string {
 	L := lua.NewState()
 	lua.OpenLibraries(L)
+
 	lua.DoFile(L, "benchmark.lua")
 	if err := lua.DoFile(L, "benchmark.lua"); err != nil {
 		return fmt.Sprintf("%s \n", err)
+	}
+
+	for _, test := range tests {
+		if err := lua.DoFile(L, test); err != nil {
+			return fmt.Sprintf("%s \n", err)
+		}
 	}
 
 	// Lua function in Go

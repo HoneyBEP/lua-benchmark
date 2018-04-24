@@ -2,9 +2,20 @@
 
 package native
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/aarzilli/golua/lua"
+)
 
-func Run() string {
-	// TODO: implement
-	return fmt.Sprintf("NATIVE: Not implemented yet")
+func Run(tests []string) string {
+	L := lua.NewState()
+	defer L.Close()
+	L.OpenLibs()
+
+	for _, test := range tests {
+		if err := L.DoFile(test); err != nil {
+			return fmt.Sprintf("%s \n", err)
+		}
+	}
+	return ""
 }
