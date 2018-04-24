@@ -1,14 +1,20 @@
 package gopher
 
 import (
-	"github.com/yuin/gopher-lua"
 	"fmt"
+	"github.com/yuin/gopher-lua"
 )
+
+/**
+
+Gopher uses Lua v5.1
+
+ */
 
 func Run() string {
 	L := lua.NewState()
 	defer L.Close()
-	if err := L.DoFile("benchmark.lua"); err != nil {
+	if err := L.DoFile("lua-tests/v5.1/all.lua"); err != nil {
 		return fmt.Sprintf("%s \n", err)
 	}
 
