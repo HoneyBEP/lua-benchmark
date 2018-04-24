@@ -1,7 +1,11 @@
 package main
 
-import "github.com/HoneyBEP/lua-benchmark/implementation"
+import (
+	"github.com/HoneyBEP/lua-benchmark/implementation"
+	"os"
+)
 
 func main() {
-	implementation.Run()
+	files := os.Args[1:]
+	implementation.Run(files)
 }

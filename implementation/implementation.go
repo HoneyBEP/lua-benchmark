@@ -9,18 +9,18 @@ import (
 	"fmt"
 )
 
-func Run() {
-	logTime(native.Run, "NATIVE")
+func Run(files []string) {
+	logTime(native.Run, "NATIVE", files)
 
-	logTime(gopher.Run, "GOPHER")
+	logTime(gopher.Run, "GOPHER", files)
 
-	logTime(shopify.Run, "SHOPIFY")
+	logTime(shopify.Run, "SHOPIFY", files)
 }
 
-func logTime(f func() string, name string) {
+func logTime(f func([]string) string, name string, tests []string) {
 	start := time.Now()
-	returnString := f()
-	elapsed := time.Now().Sub(start)
+	returnString := f(tests)
+	elapsed := time.Now().Sub(start) / time.Millisecond
 
 	fmt.Printf("----- %s BENCHMARK ----- \n Time: %d \n Returned: %s \n Finished \n\n", name, elapsed, returnString)
 }

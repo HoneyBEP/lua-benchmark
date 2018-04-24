@@ -5,17 +5,14 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
-/**
-
-Gopher uses Lua v5.1
-
- */
-
-func Run() string {
+func Run(tests []string) string {
 	L := lua.NewState()
 	defer L.Close()
-	if err := L.DoFile("lua-tests/v5.1/all.lua"); err != nil {
-		return fmt.Sprintf("%s \n", err)
+
+	for _, test := range tests {
+		if err := L.DoFile(test); err != nil {
+			return fmt.Sprintf("%s \n", err)
+		}
 	}
 
 	return ""
