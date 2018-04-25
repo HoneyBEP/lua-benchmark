@@ -21,5 +21,5 @@ func Run(tests []string) string {
 }
 
 func Demo() {
-	return true;
+	fmt.Printf("Not implemented yet")
 }
