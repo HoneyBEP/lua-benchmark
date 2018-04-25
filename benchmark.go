@@ -9,8 +9,8 @@ import (
 func main() {
 	args := os.Args[:]
 	if len(args) < 2 {
-		fmt.Printf("Please provide one of the following arguments: %s, %s or %s",
-			"'benchmark'", "'test'", "'demo'")
+		fmt.Printf("Please provide one of the following arguments: '%s', '%s' or '%s'",
+			"benchmark", "test", "demo")
 		os.Exit(0)
 	}
 

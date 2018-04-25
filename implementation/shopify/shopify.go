@@ -18,13 +18,12 @@ func Run(tests []string) string {
 	return ""
 }
 
-func Demo() bool {
+func Demo() {
 	L := lua.NewState()
 	lua.OpenLibraries(L)
 
 	if err := lua.DoFile(L, "benchmark.lua"); err != nil {
 		fmt.Printf("%s \n", err)
-		return false
 	}
 
 	// Lua function in Go
@@ -45,8 +44,6 @@ func Demo() bool {
 	// Run Go function in Lua
 	// L.Call(0, 1)
 	lua.DoString(L, "countFromGo()")
-
-	return true
 }
 
 
