@@ -1,4 +1,4 @@
-// +build !windows
+// +build windows
 
 package native
 
@@ -18,4 +18,8 @@ func Run(tests []string) string {
 		}
 	}
 	return ""
+}
+
+func Demo() {
+	return true;
 }

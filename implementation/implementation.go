@@ -54,6 +54,17 @@ func Benchmarks() {
 	fmt.Printf("\n\n%s%s%s", nativeRes.getString(), gopherRes.getString(), shopifyRes.getString())
 }
 
+func Demos() {
+	fmt.Println("\nRunning: native demo")
+	native.Demo()
+
+	fmt.Println("\nRunning: gopher demo")
+	gopher.Demo()
+
+	fmt.Println("\nRunning: shopify demo")
+	shopify.Demo()
+}
+
 // Measures execution time of the function execution
 func logTime(f func([]string) string, name string, tests []string) *result {
 	start := time.Now()
