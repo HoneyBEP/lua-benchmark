@@ -11,30 +11,7 @@ import (
 	"log"
 )
 
-type result struct {
-	name string
-	time time.Duration
-	result string
-}
-
-func (res *result) getString() string {
-	return fmt.Sprintf("----- %s BENCHMARK -----\n" +
-		"Time: %d\n" +
-		"Returned: %s\n" +
-		"Finished\n\n", res.name, res.time, res.result)
-}
-
-func add(res1 *result, res2 *result) (*result, error) {
-	if res1.name != res2.name {
-		return nil, fmt.Errorf("methods should be the same, %s and %s are not equal", res1, res2)
-	}
-	if res1.result != "" || res2.result != "" {
-		return nil, fmt.Errorf("one of the methods exited incorrectly")
-	}
-
-	return &result{res1.name, res1.time + res2.time, ""}, nil
-}
-
+// Runs the files in argument on each of the Go-Lua implementations
 func Run(files []string) {
 	fmt.Print(logTime(native.Run, "NATIVE", files).getString())
 	fmt.Print(logTime(gopher.Run, "GOPHER", files).getString())
@@ -42,11 +19,13 @@ func Run(files []string) {
 }
 
 func Benchmarks() {
+	// Read info on files in the benchmarks folder
 	fileInfos, err := ioutil.ReadDir("./benchmarks")
 	if err != nil {
 		log.Panicf("Error reading files: %s", err)
 	}
 
+	// Get names of files in 'benchmarks' folder
 	files := make([]string, 0, len(fileInfos))
 	for _, file := range fileInfos {
 		files = append(files, fmt.Sprintf("./benchmarks/%s", file.Name()))
@@ -60,20 +39,22 @@ func Benchmarks() {
 	gopher2 := logTime(gopher.Run, "GOPHER", files)
 	native2 := logTime(native.Run, "NATIVE", files)
 
+	// Tally up the results of the runs
 	var nativeRes, gopherRes, shopifyRes *result
-	if nativeRes, err = add(native1, native2); err != nil {
+	if nativeRes, err = native1.add(native2); err != nil {
 		panic(err)
 	}
-	if gopherRes, err = add(gopher1, gopher2); err != nil {
+	if gopherRes, err = gopher1.add(gopher2); err != nil {
 		panic(err)
 	}
-	if shopifyRes, err = add(shopify1, shopify2); err != nil {
+	if shopifyRes, err = shopify1.add(shopify2); err != nil {
 		panic(err)
 	}
 
 	fmt.Printf("\n\n%s%s%s", nativeRes.getString(), gopherRes.getString(), shopifyRes.getString())
 }
 
+// Measures execution time of the function execution
 func logTime(f func([]string) string, name string, tests []string) *result {
 	start := time.Now()
 	returnString := f(tests)
