@@ -1,0 +1,9 @@
+language: go
+go:
+  - "1.10"
+install:
+  - go get -u -v github.com/aarzilli/golua
+  - go get -u -v github.com/shopify/go-lua
+  - go get -u -v github.com/yuin/gopher-lua
+script:
+  - go build
