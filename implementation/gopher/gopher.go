@@ -43,7 +43,21 @@ func Demo() {
 		return 1
 	})
 
+	L.Register("goGetVariable", func(state *lua.LState) int {
+		L.Push(lua.LString("a variable"))
+		return 1
+	})
+
 	// Run Go function in Lua
 	// L.Call(0, 1)
 	L.DoString("countFromGo()")
+
+	L.CallByParam(lua.P{
+		Fn: L.GetGlobal("showVariable"),
+		NRet: 1,
+		Protect: true,
+	})
+
+	fmt.Printf("%s\n", L.CheckString(-1))
+	L.Pop(1)
 }
