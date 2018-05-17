@@ -48,6 +48,13 @@ func Demo() {
 		return 1
 	})
 
+	L.Register("concat", func(state *lua.LState) int {
+		first := state.CheckString(1)
+		second := state.CheckString(2)
+		state.Push(lua.LString(concat(first, second)))
+		return 1
+	})
+
 	// Run Go function in Lua
 	// L.Call(0, 1)
 	L.DoString("countFromGo()")
@@ -60,4 +67,8 @@ func Demo() {
 
 	fmt.Printf("%s\n", L.CheckString(-1))
 	L.Pop(1)
+}
+
+func concat(first string, second string) string {
+	return first + second
 }

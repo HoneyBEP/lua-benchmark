@@ -4,6 +4,7 @@ function benchmark(depth)
 end
 
 function countFromGo()
+    print(concat("test", "1234"))
     print('echo `count` in Lua')
     print(count())
 end
@@ -13,14 +14,14 @@ function showDate()
 end
 
 function showVariable()
-    goVariable = goGetVariable()
+    local goVariable = goGetVariable()
     print(goVariable)
     goVariable = goVariable .. " is a variable"
     return goVariable
 end
 
 function runPeopleDemo()
-    p = person.new("Steeve")
+    local p = person.new("Steeve")
     print(p:name()) -- "Steeve"
     p:name("Alice")
     print(p:name()) -- "Alice"
